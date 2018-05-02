@@ -91,3 +91,4 @@ db.col.find().pretty()
 db.col.find({'value':'cainiao'}).pretty()  ##等于 类比sql  where value=’cainiao'
 db.col.find({'value':{$lt:50}}).pretty()  ##小于 注意  $lt
 db.col.find({'likes':{$gte:50}}).pretty() #
+#http://www.runoob.com/mongodb/mongodb-query.html
