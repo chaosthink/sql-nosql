@@ -1,0 +1,93 @@
+###mongoDB学习
+use database_name  ##使用数据库，没有库的时候就创建
+show dbs  ##查看所有数据库
+db.runoob.insert({'name':'cainiao'})  #插入数据
+
+##删除数据库
+use runoob #先进入数据库
+db.dropDatabase()  #删除
+
+#删除集合（表）
+db.collection.drop()
+use runoob #进入数据库
+show tables #展示所有表
+db.site.drop() ##删除表
+
+#创建集合（表）
+db.createCollection(name,options)
+use test 
+db.createCollection('runoob')
+show collections
+db.createCollection('mycol',{capped:true,autoIndexId:true,size:6142800,max:10000}) 
+#创建一个有参数的集合，空间大小6142800kb，文档最大个数10000个
+
+db.mycol2.insert({'name':'cainiao'}) ###直接就创建集合，插入数据
+
+##删除集合
+db.collection.drop()
+use mydb
+show collection
+db.mycol2.drop() ##db.+集合名.+drop
+
+###mangodb插入文档（数据）
+db.col.insert({title:'mongoDB',description:'a Nosql database',
+  by:'chaos',
+  url:'http://www.runoob.com',
+  tags:['mongodb','database','nosql'],
+  likes:100})
+db.col.find() #查看已插入的文档
+
+document={title:'mongoDB',description:'a Nosql database',
+  by:'chaos',
+  url:'http://www.runoob.com',
+  tags:['mongodb','database','nosql'],
+  likes:100})  ##把数据当做变量
+db.col.insert(document)
+db.collection.insertMany() #插入多条数据
+
+#####更新数据
+db.collection.update(<query>,<update>)
+
+db.col.insert({title:'mangodb a',description:'mongodb is a nosql database'})
+
+db.col.update({'title':'mongodb a'},{$set:{'title':'mongodb'}}) 
+###以上语句只会修改第一条发现的文档（数据），如果要修改多条，设置multi为true
+db.col.update({'title':'mongodb a'},{$set:{'title':'mongodb'}} ,{multi:true})
+
+db.collection.save(<document>) ##替换文档数据
+
+##更多实例
+#只更新第一条记录
+db.col.update({'count':{$gt:1}},{$set:{'test2':'ok'}});
+#全部更新
+db.col.update({'count':{$gt:3}},{$set:{'test2':'ok'}},false,true)
+
+##删除数据
+db.col.insert({title: 'MongoDB 教程', 
+    description: 'MongoDB 是一个 Nosql 数据库',
+    by: '菜鸟教程',
+    url: 'http://www.runoob.com',
+    tags: ['mongodb', 'database', 'NoSQL'],
+    likes: 100
+})
+###执行两次上面的插入
+db.col.find  #查询内容
+db.col.remove({'title':'MongoDB 教程'})
+db.col.find()
+##结果是删除了两条数据
+######remove 已经过时了，现使用deleteone和deletemany
+db.inventory.deleteMany({}) #删除全部
+db.inventory.deleteMany({status:'a'}) #删除全部A数据
+db.inventory.deleteOne({status:'d'}) #删除第一条d数据
+
+####mongoDB查询文档
+db.collection.find(query,projection)
+#以易读的方式读取数据，后面+pretty()
+db.col.find().pretty() 
+##
+#查询集合col中的数据
+db.col.find().pretty()
+###添加查找条件
+db.col.find({'value':'cainiao'}).pretty()  ##等于 类比sql  where value=’cainiao'
+db.col.find({'value':{$lt:50}}).pretty()  ##小于 注意  $lt
+db.col.find({'likes':{$gte:50}}).pretty() #
